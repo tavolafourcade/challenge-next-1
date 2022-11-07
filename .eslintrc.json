@@ -37,8 +37,8 @@
         "printWidth": 100,
         "trailingComma": "all",
         "tabWidth": 2,
-        "semi": true,
-        "singleQuote": false,
+        "semi": false,
+        "singleQuote": true,
         "bracketSpacing": false,
         "arrowParens": "always",
         "endOfLine": "auto"
@@ -106,6 +106,7 @@
           "var"
         ]
       }
-    ]
+    ],
+    "@next/next/no-img-element": "off"
   }
 }
