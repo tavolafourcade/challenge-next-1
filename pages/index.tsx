@@ -1,7 +1,7 @@
 import type {GetStaticProps, NextPage} from 'next'
-import type {Product} from '../types'
+import type {Filter, Product} from '../types'
 
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 
 import api from '../api'
 import {ProductCard, PriceRangeFilter, ColorFilter, RatingFilter} from '../components/'
@@ -9,6 +9,8 @@ import {ProductCard, PriceRangeFilter, ColorFilter, RatingFilter} from '../compo
 type Props = {
   products: Product[]
 }
+type Filters = Record<string, Filter>
+
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const products = await api.product.list()
 
@@ -19,17 +21,33 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   }
 }
 const Home: NextPage<Props> = ({products}) => {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     price: null,
     color: null,
     rating: null,
   })
 
+  // Show all products if no filters are applied, otherwise filter the products
+  const matches = useMemo(() => {
+    const filtersToApply = Object.values(filters).filter(Boolean)
+    let matches = products
+
+    for (let filter of filtersToApply) {
+      matches = matches.filter(filter!) // filter (product)=>draft.has(product.color)
+    }
+    return matches
+  }, [products, filters])
+
+  console.log(matches)
+
   return (
     <main style={{display: 'flex', gap: 12}}>
       <aside>
         <PriceRangeFilter />
-        <ColorFilter />
+        <ColorFilter
+          products={products}
+          onChange={(filter: Filter) => setFilters((filters) => ({...filters, color: filter}))}
+        />
         <RatingFilter />
       </aside>
       <section
@@ -40,7 +58,7 @@ const Home: NextPage<Props> = ({products}) => {
           gap: 12,
         }}
       >
-        {products.map((product) => {
+        {matches.map((product) => {
           return (
             <article key={product.id}>
               <ProductCard product={product} />
