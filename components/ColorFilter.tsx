@@ -29,8 +29,6 @@ const ColorFilter: React.FC<Props> = ({products, onChange}) => {
     setSelected(draft)
   }
 
-  console.log(selected)
-
   return (
     <div
       style={{
@@ -60,6 +58,3 @@ const ColorFilter: React.FC<Props> = ({products, onChange}) => {
 }
 
 export default ColorFilter
-function handleChange(color: string, checked: boolean): void {
-  throw new Error('Function not implemented.')
-}
