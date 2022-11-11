@@ -35,6 +35,7 @@ const Home: NextPage<Props> = ({products}) => {
     for (let filter of filtersToApply) {
       matches = matches.filter(filter!) // filter (product)=>draft.has(product.color)
     }
+
     return matches
   }, [products, filters])
 
@@ -50,22 +51,25 @@ const Home: NextPage<Props> = ({products}) => {
         />
         <RatingFilter />
       </aside>
-      <section
-        style={{
-          display: 'grid',
-          flex: 1,
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: 12,
-        }}
-      >
-        {matches.map((product) => {
-          return (
-            <article key={product.id}>
-              <ProductCard product={product} />
-            </article>
-          )
-        })}
-      </section>
+      <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
+        <h2>{matches.length} resultados</h2>
+        <section
+          style={{
+            display: 'grid',
+            flex: 1,
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: 12,
+          }}
+        >
+          {matches.map((product) => {
+            return (
+              <article key={product.id}>
+                <ProductCard product={product} />
+              </article>
+            )
+          })}
+        </section>
+      </div>
     </main>
   )
 }
