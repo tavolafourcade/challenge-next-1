@@ -30,7 +30,7 @@ const RatingFilter: React.FC<Props> = ({onChange}) => {
     >
       <h4>Average Rating</h4>
       <ul style={{}}>
-        {[1, 2, 3, 4, 5].map((rating) => (
+        {[5, 4, 3, 2, 1].map((rating) => (
           <li key={String(rating)} style={{listStyle: 'none'}}>
             <label style={{display: 'flex', gap: 12}}>
               <input
