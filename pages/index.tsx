@@ -39,8 +39,6 @@ const Home: NextPage<Props> = ({products}) => {
     return matches
   }, [products, filters])
 
-  console.log(matches)
-
   return (
     <main style={{display: 'flex', gap: 12}}>
       <aside>
@@ -49,7 +47,9 @@ const Home: NextPage<Props> = ({products}) => {
           products={products}
           onChange={(filter: Filter) => setFilters((filters) => ({...filters, color: filter}))}
         />
-        <RatingFilter />
+        <RatingFilter
+          onChange={(filter: Filter) => setFilters((filters) => ({...filters, rating: filter}))}
+        />
       </aside>
       <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
         <h2>{matches.length} resultados</h2>
